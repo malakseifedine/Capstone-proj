@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import "./get-started.css"
+import "./get-started.css"
 const messages = [
   "Welcome to your Personalized Fitness Journey.",
   "Plan Your Meals. Track Your Workouts.",
