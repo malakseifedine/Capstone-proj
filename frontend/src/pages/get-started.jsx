@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./get-started.css"
+import "../styles/get-started.css";
 const messages = [
   "Welcome to your Personalized Fitness Journey.",
   "Plan Your Meals. Track Your Workouts.",
@@ -15,19 +15,22 @@ function GetStarted() {
   useEffect(() => {
     if (index >= messages.length) return;
     const fullText = messages[index];
-    const timeout = setTimeout(() => {
-      if (!deleting && subIndex < fullText.length) {
-        setSubIndex(subIndex + 1);
-      } else if (deleting && subIndex > 0) {
-        setSubIndex(subIndex - 1);
-      } else if (!deleting && subIndex === fullText.length) {
-        setTimeout(() => setDeleting(true), 1000);
-      } else if (deleting && subIndex === 0) {
-        setDeleting(false);
-        setIndex((prev) => (prev + 1) % messages.length);
-      }
-      setText(fullText.substring(0, subIndex));
-    }, deleting ? 40 : 100);
+    const timeout = setTimeout(
+      () => {
+        if (!deleting && subIndex < fullText.length) {
+          setSubIndex(subIndex + 1);
+        } else if (deleting && subIndex > 0) {
+          setSubIndex(subIndex - 1);
+        } else if (!deleting && subIndex === fullText.length) {
+          setTimeout(() => setDeleting(true), 1000);
+        } else if (deleting && subIndex === 0) {
+          setDeleting(false);
+          setIndex((prev) => (prev + 1) % messages.length);
+        }
+        setText(fullText.substring(0, subIndex));
+      },
+      deleting ? 40 : 100
+    );
 
     return () => clearTimeout(timeout);
   }, [subIndex, index, deleting]);
@@ -43,30 +46,50 @@ function GetStarted() {
           </h1>
 
           <p className="text-gray-700 text-lg mb-8">
-            This web app is your all-in-one fitness companion — featuring a meal planner with personalized recommendations based on your goals, a workout tracker, and a progress dashboard to monitor your results.
+            This web app is your all-in-one fitness companion — featuring a meal
+            planner with personalized recommendations based on your goals, a
+            workout tracker, and a progress dashboard to monitor your results.
           </p>
 
           <div className="space-y-4">
             <div className="p-4 bg-white shadow rounded-xl">
-              <h4 className="font-semibold text-gray-800 mb-1">Smart Meal Planner</h4>
-              <p className="text-sm text-gray-600">Plan meals tailored to your fitness goals. Add or remove meals and receive suggestions that fit your dietary targets.</p>
+              <h4 className="font-semibold text-gray-800 mb-1">
+                Smart Meal Planner
+              </h4>
+              <p className="text-sm text-gray-600">
+                Plan meals tailored to your fitness goals. Add or remove meals
+                and receive suggestions that fit your dietary targets.
+              </p>
             </div>
             <div className="p-4 bg-white shadow rounded-xl">
-              <h4 className="font-semibold text-gray-800 mb-1">Workout Tracker</h4>
-              <p className="text-sm text-gray-600">Track your workouts, schedule new ones, and explore recommended exercises based on your goal.</p>
+              <h4 className="font-semibold text-gray-800 mb-1">
+                Workout Tracker
+              </h4>
+              <p className="text-sm text-gray-600">
+                Track your workouts, schedule new ones, and explore recommended
+                exercises based on your goal.
+              </p>
             </div>
             <div className="p-4 bg-white shadow rounded-xl">
-              <h4 className="font-semibold text-gray-800 mb-1">Goal Progress</h4>
-              <p className="text-sm text-gray-600">View progress updates and stay informed on whether your fitness goals are being met.</p>
+              <h4 className="font-semibold text-gray-800 mb-1">
+                Goal Progress
+              </h4>
+              <p className="text-sm text-gray-600">
+                View progress updates and stay informed on whether your fitness
+                goals are being met.
+              </p>
             </div>
           </div>
         </div>
 
         {/* Right Panel */}
         <div className="bg-white p-10 shadow-2xl rounded-2xl flex flex-col items-center text-center">
-          <h2 className="text-3xl font-bold text-green-700 mb-4">Get Started</h2>
+          <h2 className="text-3xl font-bold text-green-700 mb-4">
+            Get Started
+          </h2>
           <p className="text-gray-600 mb-8">
-            Sign in or create an account to begin your personalized fitness experience.
+            Sign in or create an account to begin your personalized fitness
+            experience.
           </p>
           <div className="flex flex-col gap-4 w-full">
             <a
