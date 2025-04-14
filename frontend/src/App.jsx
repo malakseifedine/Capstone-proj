@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
-import GetStarted from "./pages/get-started";
+import GetStarted from "./pages/GetStarted";
 
 function App() {
   return (
