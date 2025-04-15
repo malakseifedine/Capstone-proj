@@ -7,11 +7,11 @@ export default function GetStarted() {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="p-8">
           <div className="h-12 w-12 rounded-xl bg-purple-600 flex items-center justify-center mb-6">
-            <span className="text-white font-bold text-xl">FD</span>
+            <span className="text-white font-bold text-xl">FT</span>
           </div>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome to FitDash
+            Welcome to FitTrack
           </h1>
           <p className="text-gray-600 mb-8">
             Your personal fitness journey starts here. Track workouts, plan
@@ -56,12 +56,6 @@ export default function GetStarted() {
               I already have an account
             </button>
           </div>
-        </div>
-
-        <div className="bg-purple-50 p-6 border-t border-gray-100">
-          <p className="text-sm text-gray-600 text-center">
-            Join 10,000+ users transforming their fitness journey with FitDash
-          </p>
         </div>
       </div>
     </div>
