@@ -15,10 +15,10 @@ export default function Homepage() {
   return (
     <Layout>
       <div className="homepage-container">
-        {/* Welcome Section */}
         <div className="welcome-section">
           <div>
-            <h1 className="welcome-title">Welcome back, Sarah!</h1>
+            {/* <h1 className="welcome-title">Welcome back, {userName}!</h1> */}
+            <h1 className="welcome-title">Welcome back, user!</h1>
             <p className="welcome-subtitle">
               Track your progress and stay motivated.
             </p>
