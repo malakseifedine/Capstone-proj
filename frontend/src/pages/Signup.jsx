@@ -171,7 +171,7 @@ export default function Signup() {
               href="#"
               className="text-purple-600 font-medium hover:text-purple-800"
             >
-              Sign in
+              Log in
             </a>
           </p>
         </div>
