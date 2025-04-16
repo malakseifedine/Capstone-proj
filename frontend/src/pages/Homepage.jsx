@@ -9,7 +9,7 @@ import {
   Utensils,
   TrendingUp,
 } from "lucide-react";
-import "./Homepage.css";
+import "../styles/Homepage.css";
 
 export default function Homepage() {
   return (

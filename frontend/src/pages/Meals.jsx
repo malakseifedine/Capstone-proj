@@ -9,7 +9,7 @@ import {
   BookmarkCheck,
   ChevronRight,
 } from "lucide-react";
-import "./Meals.css";
+import "../styles/Meals.css";
 
 export default function Meals() {
   const [activeTab, setActiveTab] = useState("all");

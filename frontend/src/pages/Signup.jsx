@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Lock, User, ArrowRight, EyeOff, Eye } from "lucide-react";
-import "./Signup.css"; // Make sure this path matches your folder structure
+import "../styles/Signup.css";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);

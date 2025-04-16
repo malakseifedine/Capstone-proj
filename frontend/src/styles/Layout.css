@@ -1,0 +1,27 @@
+.layout-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f9fafb; /* Equivalent to Tailwind's bg-gray-50 */
+  }
+  
+  .layout-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .layout-main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #f9fafb;
+  }
+  
+  /* Optional for larger screens */
+  @media (min-width: 768px) {
+    .layout-main-content {
+      padding: 1.5rem;
+    }
+  }
+  

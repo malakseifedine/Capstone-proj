@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
-import "./GetStarted.css";
+import "../styles/GetStarted.css";
 
 export default function GetStarted() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Mail, Lock, ArrowRight } from "lucide-react";
-import "./Login.css";
+import "../styles/Login.css";
 
 export default function Login() {
   return (

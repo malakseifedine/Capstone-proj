@@ -1,0 +1,136 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    transition: transform 0.3s ease-in-out;
+    z-index: 30;
+    overflow: hidden;
+  }
+  
+  .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .sidebar.collapsed {
+    width: 5rem;
+  }
+  .sidebar:not(.collapsed) {
+    width: 16rem;
+  }
+  
+  /* Mobile behavior */
+  .sidebar.mobile-closed {
+    transform: translateX(-100%);
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  @media (min-width: 768px) {
+    .sidebar {
+      transform: translateX(0) !important;
+      position: relative;
+    }
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .logo-icon {
+    height: 2rem;
+    width: 2rem;
+    background-color: #7c3aed;
+    color: white;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .logo-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #111827;
+  }
+  
+  .collapse-toggle {
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    color: #4b5563;
+  }
+  .collapse-toggle:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .sidebar-nav {
+    padding: 1rem 0.5rem;
+    flex: 1;
+  }
+  .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: #374151;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  .sidebar-nav-item:hover {
+    background-color: #f3f4f6;
+  }
+  .sidebar-nav-item.active {
+    background-color: #ede9fe;
+    color: #6b21a8;
+  }
+  .nav-label {
+    font-weight: 500;
+  }
+  
+  .sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  /* Mobile toggle button */
+  .sidebar-mobile-toggle {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 40;
+    background-color: #7c3aed;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+  }
+  @media (min-width: 768px) {
+    .sidebar-mobile-toggle {
+      display: none;
+    }
+  }
+  
