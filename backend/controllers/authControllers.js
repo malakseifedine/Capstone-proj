@@ -1,9 +1,9 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 let users = []; 
 
-export const registerUser = (req, res) => {
+exports.registerUser = (req, res) => {
   const { name, email, password } = req.body;
   const userExists = users.find(user => user.email === email);
   if (userExists) return res.status(400).json({ message: 'User already exists' });
@@ -11,10 +11,11 @@ export const registerUser = (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = { id: Date.now(), name, email, password: hashedPassword };
   users.push(newUser);
+
   res.status(201).json({ message: 'User registered successfully' });
 };
 
-export const loginUser = (req, res) => {
+exports.loginUser = (req, res) => {
   const { email, password } = req.body;
   const user = users.find(user => user.email === email);
   if (!user || !bcrypt.compareSync(password, user.password)) {
