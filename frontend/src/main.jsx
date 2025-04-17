@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Signup from "./pages/Signup";
 import Meals from "./pages/Meals";
-// Removed unused import
 
 const router = createBrowserRouter([
   {

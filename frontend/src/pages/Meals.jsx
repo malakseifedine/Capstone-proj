@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import {
   Search,
-  Filter,
+  // Filter,
   Plus,
   Clock,
   Bookmark,
@@ -23,9 +23,9 @@ export default function Meals() {
     }
   };
 
-  const meals = [
-    // ... (same meal data)
-  ];
+  // const meals = [
+  //   // ... (same meal data)
+  // ];
 
   return (
     <Layout>
@@ -50,10 +50,6 @@ export default function Meals() {
               className="search-input"
             />
           </div>
-          <button className="filter-btn">
-            <Filter size={18} />
-            Filter
-          </button>
         </div>
 
         <div className="tabs">

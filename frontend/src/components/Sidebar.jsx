@@ -8,7 +8,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-// import "./Sidebar.css";
+import "../styles/Sidebar.css";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);

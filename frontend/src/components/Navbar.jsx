@@ -25,7 +25,7 @@ export default function Navbar() {
             <div className="user-avatar">
               <User size={18} />
             </div>
-            <span className="username">Sarah</span>
+            <span className="username">User</span>
           </div>
         </div>
       </div>
