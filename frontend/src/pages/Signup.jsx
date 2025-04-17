@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Mail, Lock, User, ArrowRight, EyeOff, Eye } from "lucide-react";
 import "../styles/Signup.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -12,6 +15,41 @@ export default function Signup() {
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/homepage");
+    }
+  }, []);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          name: name,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+        }
+      );
+      if (response.status >= 200 && response.status < 300) {
+        navigate("/login");
+      } else {
+        // Handle signup failure
+        console.error("Signup failed:", response.data);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+    }
   };
 
   return (
@@ -35,6 +73,10 @@ export default function Signup() {
               <div className="input-wrapper">
                 <User size={18} className="input-icon" />
                 <input
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                   id="name"
                   type="text"
                   placeholder="John Doe"
@@ -50,6 +92,10 @@ export default function Signup() {
               <div className="input-wrapper">
                 <Mail size={18} className="input-icon" />
                 <input
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                   id="email"
                   type="email"
                   placeholder="your@email.com"
@@ -65,6 +111,10 @@ export default function Signup() {
               <div className="input-wrapper">
                 <Lock size={18} className="input-icon" />
                 <input
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
@@ -88,6 +138,10 @@ export default function Signup() {
               <div className="input-wrapper">
                 <Lock size={18} className="input-icon" />
                 <input
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
@@ -121,7 +175,7 @@ export default function Signup() {
               </label>
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button onClick={handleSignup} type="submit" className="submit-btn">
               Create Account <ArrowRight size={18} />
             </button>
           </form>
@@ -130,7 +184,7 @@ export default function Signup() {
         <div className="footer">
           <p className="footer-text">
             Already have an account?{" "}
-            <a href="#" className="link">
+            <a href="/login" className="link">
               Log in
             </a>
           </p>

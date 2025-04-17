@@ -1,8 +1,18 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import "../styles/GetStarted.css";
+import { useNavigate } from "react-router-dom";
 
 export default function GetStarted() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/homepage");
+    }
+  }, []);
+
   return (
     <div className="get-started-container">
       <div className="get-started-card">
@@ -33,10 +43,20 @@ export default function GetStarted() {
           </div>
 
           <div className="get-started-buttons">
-            <button className="get-started-btn primary">
+            <button
+              onClick={() => {
+                navigate("/signup");
+              }}
+              className="get-started-btn primary"
+            >
               Get Started <ArrowRight size={18} />
             </button>
-            <button className="get-started-btn secondary">
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="get-started-btn secondary"
+            >
               I already have an account
             </button>
           </div>

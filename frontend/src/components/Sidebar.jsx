@@ -9,10 +9,13 @@ import {
   X,
 } from "lucide-react";
 import "../styles/Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobile, setMobile] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -64,7 +67,13 @@ export default function Sidebar() {
             </ul>
           </nav>
 
-          <div className="sidebar-footer">
+          <div
+            className="sidebar-footer"
+            onClick={() => {
+              navigate("/login");
+              localStorage.removeItem("token");
+            }}
+          >
             <a href="#" className="sidebar-nav-item">
               <LogOut size={20} />
               {!collapsed && <span className="nav-label">Logout</span>}
