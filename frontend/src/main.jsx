@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Signup from "./pages/Signup";
 import Meals from "./pages/Meals";
+import Workouts from "./pages/Workouts";
+import Progress from "./pages/Progress";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
   {
     path: "/meals",
     element: <Meals />,
+  },
+  {
+    path: "/workouts",
+    element: <Workouts />,
+  },
+  {
+    path: "/progress",
+    element: <Progress />,
   },
   // {
   //   path: "*",

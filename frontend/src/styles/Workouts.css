@@ -1,0 +1,191 @@
+.workout-container {
+    padding: 32px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9fafb;
+  }
+  
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  
+  .header-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  
+  .add-btn,
+  .save-btn,
+  .add-exercise-btn,
+  .remove-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .add-btn {
+    background-color: #a855f7;
+    color: white;
+  }
+  
+  .add-btn:hover {
+    background-color: #9333ea;
+  }
+  
+  .save-btn {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background-color: #059669;
+  }
+  
+  .remove-btn {
+    background: none;
+    color: #ef4444;
+    font-weight: 600;
+  }
+  
+  .remove-btn:hover {
+    text-decoration: underline;
+  }
+  
+  .form-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    margin-bottom: 32px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .form-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #374151;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+  }
+  
+  .exercise-section {
+    margin-bottom: 28px;
+  }
+  
+  .exercise-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #4b5563;
+  }
+  
+  .exercise-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .exercise-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .exercise-table th,
+  .exercise-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+  }
+  
+  .exercise-table thead {
+    background-color: #f9f9fb;
+  }
+  
+  .form-footer {
+    text-align: right;
+    margin: 50px;
+  }
+  
+  .workout-list {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+  }
+  
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #374151;
+  }
+  
+  .empty-msg {
+    color: #6b7280;
+    font-size: 14px;
+  }
+  
+  .workout-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .workout-card {
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  .workout-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .workout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #4b5563;
+  }

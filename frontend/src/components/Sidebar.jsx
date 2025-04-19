@@ -8,14 +8,15 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Sidebar.css";
-import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobile, setMobile] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -25,14 +26,21 @@ export default function Sidebar() {
     setMobile(!mobile);
   };
 
-  const NavItem = ({ icon, label, active = false }) => (
-    <li>
-      <a href="#" className={`sidebar-nav-item ${active ? "active" : ""}`}>
-        {icon}
-        {!collapsed && <span className="nav-label">{label}</span>}
-      </a>
-    </li>
-  );
+  const NavItem = ({ icon, label, to }) => {
+    const isActive = location.pathname === to;
+
+    return (
+      <li>
+        <Link
+          to={to}
+          className={`sidebar-nav-item ${isActive ? "active" : ""}`}
+        >
+          {icon}
+          {!collapsed && <span className="nav-label">{label}</span>}
+        </Link>
+      </li>
+    );
+  };
 
   return (
     <>
@@ -60,24 +68,40 @@ export default function Sidebar() {
 
           <nav className="sidebar-nav">
             <ul>
-              <NavItem icon={<Home size={20} />} label="Dashboard" active />
-              <NavItem icon={<Utensils size={20} />} label="Meals" />
-              <NavItem icon={<Dumbbell size={20} />} label="Workouts" />
-              <NavItem icon={<LineChart size={20} />} label="Progress" />
+              <NavItem
+                icon={<Home size={20} />}
+                label="Dashboard"
+                to="/homepage"
+              />
+              <NavItem
+                icon={<Utensils size={20} />}
+                label="Meals"
+                to="/meals"
+              />
+              <NavItem
+                icon={<Dumbbell size={20} />}
+                label="Workouts"
+                to="/workouts"
+              />
+              <NavItem
+                icon={<LineChart size={20} />}
+                label="Progress"
+                to="/progress"
+              />
             </ul>
           </nav>
 
           <div
             className="sidebar-footer"
             onClick={() => {
-              navigate("/login");
               localStorage.removeItem("token");
+              navigate("/login");
             }}
           >
-            <a href="#" className="sidebar-nav-item">
+            <div className="sidebar-nav-item">
               <LogOut size={20} />
               {!collapsed && <span className="nav-label">Logout</span>}
-            </a>
+            </div>
           </div>
         </div>
       </aside>

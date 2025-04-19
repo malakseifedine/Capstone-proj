@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import "../styles/GetStarted.css";
 import { useNavigate } from "react-router-dom";
@@ -6,22 +6,22 @@ import { useNavigate } from "react-router-dom";
 export default function GetStarted() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/homepage");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   return (
     <div className="get-started-container">
       <div className="get-started-card">
         <div className="get-started-content">
           <div className="get-started-logo">
-            <span>FT</span>
+            <span>FD</span>
           </div>
 
-          <h1 className="get-started-title">Welcome to FitTrack</h1>
+          <h1 className="get-started-title">Welcome to FitDash</h1>
           <p className="get-started-description">
             Your personal fitness journey starts here. Track workouts, plan
             meals, and achieve your goals.

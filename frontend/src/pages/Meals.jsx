@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import {
   Search,
-  // Filter,
   Plus,
   Clock,
   Bookmark,
@@ -23,9 +22,9 @@ export default function Meals() {
     }
   };
 
-  // const meals = [
-  //   // ... (same meal data)
-  // ];
+  const meals = [
+    // ... (same meal data)
+  ];
 
   return (
     <Layout>
