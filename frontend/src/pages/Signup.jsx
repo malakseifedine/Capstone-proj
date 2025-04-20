@@ -79,7 +79,7 @@ export default function Signup() {
                   }}
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  // placeholder="John Doe"
                   className="input-field"
                 />
               </div>
@@ -98,7 +98,7 @@ export default function Signup() {
                   }}
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  // placeholder="your@email.com"
                   className="input-field"
                 />
               </div>
@@ -117,7 +117,7 @@ export default function Signup() {
                   }}
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  // placeholder="••••••••"
                   className="input-field password"
                 />
                 <button
@@ -144,7 +144,7 @@ export default function Signup() {
                   }}
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  // placeholder="••••••••"
                   className="input-field password"
                 />
                 <button
