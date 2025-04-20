@@ -23,19 +23,8 @@ export default function Homepage() {
               Track your progress and stay motivated.
             </p>
           </div>
-          <div className="welcome-buttons">
-            <button className="btn primary">
-              <Dumbbell size={18} />
-              Start Workout
-            </button>
-            <button className="btn secondary">
-              <Calendar size={18} />
-              Schedule
-            </button>
-          </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="stats-grid">
           {/* Card 1 */}
           <div className="card">
@@ -82,23 +71,6 @@ export default function Homepage() {
             </div>
             <div className="progress-bar">
               <div className="progress green" style={{ width: "68%" }}></div>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="card">
-            <div className="card-header">
-              <div className="icon red">
-                <Heart size={20} />
-              </div>
-              <div>
-                <p className="card-label">Avg. Heart Rate</p>
-                <p className="card-value">72 bpm</p>
-              </div>
-            </div>
-            <div className="trend">
-              <TrendingUp size={16} className="trend-icon green" />
-              <span className="trend-text green">+2% from last week</span>
             </div>
           </div>
         </div>

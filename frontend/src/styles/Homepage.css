@@ -175,12 +175,14 @@
   background-color: #10b981;
 }
 
-/* Trend */
+
 .trend {
+  margin-top: 16px;
+  font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 8px;
+  gap: 6px;
+  color: #10b981;
 }
 
 .trend-icon.green {
@@ -192,13 +194,16 @@
   font-size: 12px;
 }
 
-/* Section titles */
 .section {
+  flex: 1 1 350px;
   background-color: white;
   padding: 24px;
   border-radius: 16px;
   border: 1px solid #f3f4f6;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-width: 340px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title {
@@ -312,7 +317,10 @@
 
 @media (min-width: 1024px) {
   .progress-preview {
-    grid-template-columns: 250px 250px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 24px;
   }
 }
 
@@ -320,24 +328,26 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  height: 192px;
+  height: 140px;
   padding: 0 8px;
+  margin-top: 12px;
 }
 
 .bar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .bar {
   background-color: #7c3aed;
-  width: 32px;
-  border-radius: 8px 8px 0 0;
+  width: 24px;
+  border-radius: 6px 6px 0 0;
 }
 
 .bar-label {
-  margin-top: 4px;
+  margin-top: 8px;
   font-size: 12px;
   color: #6b7280;
 }
@@ -345,28 +355,31 @@
 .workout-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .workout-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
+  justify-content: space-between;
   background-color: #f9fafb;
+  padding: 16px;
   border-radius: 12px;
+  transition: box-shadow 0.2s ease;
 }
 
 .workout-info {
   flex: 1;
+  margin-left: 16px;
 }
 
 .workout-title {
-  font-weight: 500;
+  font-weight: 600;
   color: #111827;
+  margin-bottom: 4px;
 }
 
 .workout-time {
-  font-size: 12px;
+  font-size: 13px;
   color: #6b7280;
 }
