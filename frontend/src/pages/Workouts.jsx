@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout";
+import Sidebar from "../components/Sidebar";
+import "../styles/Sidebar.css";
 import "../styles/Workouts.css";
 
 const Workouts = () => {
@@ -72,7 +73,9 @@ const Workouts = () => {
   };
 
   return (
-    <Layout>
+    <div className="page-wrapper">
+      <Sidebar />
+
       <div className="workout-container">
         <div className="header-row">
           <h1 className="header-title">Workout Tracking</h1>
@@ -273,7 +276,7 @@ const Workouts = () => {
           )}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

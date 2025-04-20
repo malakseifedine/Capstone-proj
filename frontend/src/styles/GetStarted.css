@@ -3,64 +3,64 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 1080px;
   background: linear-gradient(to bottom right, #f5f3ff, #e0e7ff);
-  padding: 1rem;
+  padding: 16px; 
 }
 
 .get-started-card {
   max-width: 400px;
   width: 100%;
   background-color: #ffffff;
-  border-radius: 1.5rem;
+  border-radius: 24px; 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .get-started-content {
-  padding: 2rem;
+  padding: 32px; 
 }
 
 .get-started-logo {
   height: 48px;
   width: 48px;
   background-color: #7c3aed;
-  border-radius: 0.75rem;
+  border-radius: 12px; 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .get-started-logo span {
   color: #ffffff;
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 20px; 
 }
 
 .get-started-title {
-  font-size: 1.875rem;
+  font-size: 30px; 
   font-weight: bold;
   color: #111827;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 }
 
 .get-started-description {
   color: #4b5563;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
 }
 
 .get-started-steps {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 16px; 
+  margin-bottom: 32px; 
 }
 
 .step {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px; 
 }
 
 .step-number {
@@ -79,20 +79,20 @@
 .get-started-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px; 
 }
 
 .get-started-btn {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 12px 16px;
   font-weight: 500;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  border-radius: 8px; 
+  font-size: 16px;
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 8px; 
   cursor: pointer;
   border: none;
 }
