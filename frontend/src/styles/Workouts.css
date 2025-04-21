@@ -35,21 +35,21 @@
   }
   
   .add-btn {
-    background-color: #a855f7;
+    background-color: #7c3aed;
     color: white;
   }
   
   .add-btn:hover {
-    background-color: #9333ea;
+    background-color: #7c3aed;
   }
   
   .save-btn {
-    background-color: #9333ea;
+    background-color: #7c3aed;
     color: white;
   }
   
   .save-btn:hover {
-    background-color: #9333ea;
+    background-color: #7c3aed;
   }
   
   .remove-btn {
