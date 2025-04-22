@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
-// import { mealService } from "../services/api";
+import Sidebar from "../components/Sidebar";
 import {
   Search,
   Plus,
@@ -46,7 +45,6 @@ export default function Meals() {
       } else if (activeTab === "all") {
         response = await mealService.getMeals();
       } else {
-        // Category tabs (breakfast, lunch, dinner, snacks)
         response = await mealService.getMealsByCategory(
           activeTab.charAt(0).toUpperCase() + activeTab.slice(1)
         );
@@ -74,7 +72,6 @@ export default function Meals() {
       setMealPlan(response.data);
     } catch (err) {
       console.error("Error fetching meal plan:", err);
-      // Don't set error, not critical for page functioning
     }
   };
 
@@ -187,7 +184,9 @@ export default function Meals() {
   );
 
   return (
-    <Layout>
+    <div className="page-wrapper">
+      <Sidebar />
+
       <div className="meals-container">
         <div className="meals-header">
           <div>
@@ -320,12 +319,12 @@ export default function Meals() {
                         currentIngredient: e.target.value,
                       })
                     }
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleAddIngredient();
-                      }
-                    }}
+                    // onKeyPress={(e) => {
+                    //   if (e.key === "Enter") {
+                    //     e.preventDefault();
+                    //     handleAddIngredient();
+                    //   }
+                    // }}
                   />
                   <button
                     type="button"
@@ -505,6 +504,6 @@ export default function Meals() {
           </div>
         )}
       </div>
-    </Layout>
+    </div>
   );
 }
