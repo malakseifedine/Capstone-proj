@@ -9,14 +9,10 @@
 
 .meals-container {
   flex: 1;
-  margin-left: 250px; /* Width of sidebar */
-  padding: 24px;
+  margin-left: 0; /* Remove margin-left to allow proper positioning */
+  padding: 40px 40px; /* Increase padding for better spacing */
+  background-color: #f3f4f6; /* Match the background color from the screenshot */
   transition: margin-left 0.3s ease;
-}
-
-/* Adjust container when sidebar is collapsed */
-.collapsed + .meals-container {
-  margin-left: 70px; /* Width of collapsed sidebar */
 }
 
 /* Header section */
@@ -28,7 +24,7 @@
 }
 
 .title {
-  font-size: 28px;
+  font-size: 32px; /* Slightly larger font size */
   font-weight: 700;
   color: #1f2937;
   margin: 0;
@@ -44,7 +40,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 12px 24px; /* Larger padding for better appearance */
   background-color: #7e57ff;
   color: white;
   border: none;
@@ -64,155 +60,26 @@
   color: #dc2626;
   padding: 12px;
   border-radius: 8px;
-  margin-bottom: 16px;
-}
-
-/* Meal form card */
-.meal-form-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  padding: 24px;
-  margin-bottom: 24px;
-}
-
-.form-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: #374151;
-}
-
-.input-field {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #7e57ff;
-  box-shadow: 0 0 0 2px rgba(126, 87, 255, 0.2);
-}
-
-/* Ingredients section */
-.ingredients-section {
-  margin-bottom: 24px;
-}
-
-.ingredients-section h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.ingredients-input {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.add-ingredient-btn {
-  padding: 8px 16px;
-  background-color: #e5e7eb;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.add-ingredient-btn:hover {
-  background-color: #d1d5db;
-}
-
-.ingredients-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.ingredient-tag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background-color: #f3f4f6;
-  border-radius: 16px;
-  font-size: 14px;
-}
-
-.remove-ingredient-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-}
-
-.remove-ingredient-btn:hover {
-  color: #dc2626;
-}
-
-.form-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.save-btn {
-  padding: 10px 24px;
-  background-color: #7e57ff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.save-btn:hover {
-  background-color: #6b47db;
-}
-
-.save-btn:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
+  margin-bottom: 24px; /* Increased margin */
+  text-align: center; /* Center the error message */
 }
 
 /* Search filter */
 .search-filter {
   margin-bottom: 24px;
+  max-width: 800px; /* Limit the width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-box {
   position: relative;
-  max-width: 400px;
+  width: 100%;
 }
 
 .search-icon {
   position: absolute;
-  left: 12px;
+  left: 16px; /* Adjusted spacing */
   top: 50%;
   transform: translateY(-50%);
   color: #6b7280;
@@ -220,10 +87,11 @@
 
 .search-input {
   width: 100%;
-  padding: 10px 16px 10px 40px;
+  padding: 14px 16px 14px 44px; /* Adjusted padding */
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px; /* Slightly larger font */
+  background-color: white;
 }
 
 .search-input:focus {
@@ -235,18 +103,19 @@
 /* Tabs */
 .tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  justify-content: center; /* Center the tabs */
+  gap: 16px; /* Increased gap */
+  margin-bottom: 32px;
   overflow-x: auto;
 }
 
 .tab-btn {
-  padding: 8px 16px;
+  padding: 8px 20px; /* Adjusted padding */
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
   font-weight: 500;
+  font-size: 16px; /* Slightly larger font */
   color: #6b7280;
   cursor: pointer;
   white-space: nowrap;
@@ -255,6 +124,14 @@
 .tab-btn.active-tab {
   color: #7e57ff;
   border-bottom-color: #7e57ff;
+}
+
+/* Empty state */
+.empty-message {
+  text-align: center;
+  padding: 60px 20px; /* More padding for empty state */
+  color: #6b7280;
+  font-size: 16px;
 }
 
 /* Meal grid */
@@ -391,20 +268,13 @@
   font-weight: 500;
 }
 
-/* Loading and empty states */
-.loading-message,
-.empty-message {
-  text-align: center;
-  padding: 40px;
-  color: #6b7280;
-}
-
 /* Meal plan section */
 .meal-plan {
   background: white;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   padding: 24px;
+  margin-top: 32px;
 }
 
 .plan-header {
@@ -503,12 +373,13 @@
     justify-content: center;
   }
   
-  .form-grid {
-    display: block;
+  .tabs {
+    justify-content: flex-start;
+    padding: 0 16px;
   }
   
-  .form-group {
-    margin-bottom: 16px;
+  .search-filter {
+    padding: 0 16px;
   }
   
   .meal-grid {
@@ -531,13 +402,4 @@
     flex-direction: column;
     align-items: flex-start;
   }
-}
-.add-ingredient-btn{
-  padding: 10px 24px;
-  background-color: #7e57ff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
 }
