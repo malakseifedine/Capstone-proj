@@ -1,8 +1,82 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
-import "../styles/Sidebar.css";
 import "../styles/Workouts.css";
 
+// In Workouts.jsx
+useEffect(() => {
+  fetchWorkouts();
+}, []);
+
+const fetchWorkouts = async () => {
+  try {
+    setIsLoading(true);
+    const response = await workoutService.getWorkouts();
+    setWorkouts(response.data);
+    setError(null);
+  } catch (err) {
+    console.error("Error fetching workouts:", err);
+    setError("Failed to load workouts. Please try again later.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+const handleSaveWorkout = async () => {
+  if (!newWorkout.date || !newWorkout.exercises?.length) return;
+
+  try {
+    setIsLoading(true);
+
+    // Format data to match API expectations
+    const workoutData = {
+      date: newWorkout.date,
+      exercises: newWorkout.exercises.map((ex) => ({
+        name: ex.name,
+        sets: parseInt(ex.sets) || 3,
+        reps: parseInt(ex.reps) || 10,
+        weight: ex.weight ? parseFloat(ex.weight) : null,
+      })),
+      duration: parseInt(newWorkout.duration) || 30,
+      caloriesBurned: parseInt(newWorkout.caloriesBurned) || 0,
+      notes: newWorkout.notes || "",
+    };
+
+    await workoutService.createWorkout(workoutData);
+
+    // Reset form and fetch updated workouts
+    setShowAddForm(false);
+    setNewWorkout({
+      date: new Date().toISOString().split("T")[0],
+      exercises: [],
+      duration: 30,
+      caloriesBurned: 0,
+      notes: "",
+    });
+    await fetchWorkouts();
+    setError(null);
+  } catch (err) {
+    console.error("Error saving workout:", err);
+    setError("Failed to save workout. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+const handleDeleteWorkout = async (id) => {
+  if (window.confirm("Are you sure you want to delete this workout?")) {
+    try {
+      setIsLoading(true);
+      await workoutService.deleteWorkout(id);
+      await fetchWorkouts();
+      setError(null);
+    } catch (err) {
+      console.error("Error deleting workout:", err);
+      setError("Failed to delete workout. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+};
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);

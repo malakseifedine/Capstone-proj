@@ -12,6 +12,96 @@ import {
 } from "lucide-react";
 import "../styles/Meals.css";
 
+// In Meals.jsx
+useEffect(() => {
+  fetchMeals();
+  fetchMealPlan();
+}, [activeTab]);
+
+const fetchMeals = async () => {
+  try {
+    setIsLoading(true);
+    let response;
+
+    if (activeTab === "saved") {
+      response = await mealService.getSavedMeals();
+    } else if (activeTab === "all") {
+      response = await mealService.getMeals();
+    } else {
+      response = await mealService.getMealsByCategory(
+        activeTab.charAt(0).toUpperCase() + activeTab.slice(1)
+      );
+    }
+
+    setMeals(response.data);
+
+    // Get saved meals for toggle functionality
+    const savedResponse = await mealService.getSavedMeals();
+    setSavedMeals(savedResponse.data.map((meal) => meal.id));
+
+    setError(null);
+  } catch (err) {
+    console.error("Error fetching meals:", err);
+    setError("Failed to load meals. Please try again later.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+const handleSubmitMeal = async (e) => {
+  e.preventDefault();
+
+  if (
+    !newMeal.name ||
+    !newMeal.category ||
+    newMeal.ingredients.length === 0 ||
+    !newMeal.calories
+  ) {
+    setError("Please fill in all required fields");
+    return;
+  }
+
+  try {
+    setIsLoading(true);
+
+    const mealData = {
+      name: newMeal.name,
+      category: newMeal.category,
+      ingredients: newMeal.ingredients,
+      calories: parseInt(newMeal.calories) || 0,
+      protein: parseFloat(newMeal.protein) || 0,
+      carbs: parseFloat(newMeal.carbs) || 0,
+      fat: parseFloat(newMeal.fat) || 0,
+      prepTime: parseInt(newMeal.prepTime) || 0,
+      isSaved: false,
+    };
+
+    await mealService.createMeal(mealData);
+
+    // Reset form and fetch updated meals
+    setNewMeal({
+      name: "",
+      category: "Breakfast",
+      ingredients: [],
+      calories: "",
+      protein: "",
+      carbs: "",
+      fat: "",
+      prepTime: "",
+      currentIngredient: "",
+    });
+
+    setShowAddMealForm(false);
+    fetchMeals();
+    setError(null);
+  } catch (err) {
+    console.error("Error creating meal:", err);
+    setError("Failed to create meal. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 export default function Meals() {
   const [activeTab, setActiveTab] = useState("all");
   const [meals, setMeals] = useState([]);

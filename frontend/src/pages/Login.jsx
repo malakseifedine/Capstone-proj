@@ -4,6 +4,28 @@ import "../styles/Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const handleLogin = async (e) => {
+  try {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:5000/api/auth/login", {
+      email: email,
+      password: password,
+    });
+    if (response.status === 200) {
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/homepage");
+    } else {
+      // Handle login failure
+      console.error("Login failed:", response.data);
+    }
+  } catch (error) {
+    // Handle error (e.g., show error message)
+    console.error("Error during login:", error);
+  }
+};
+
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
