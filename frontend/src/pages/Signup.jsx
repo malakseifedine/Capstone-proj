@@ -3,29 +3,30 @@ import { Mail, Lock, User, ArrowRight, EyeOff, Eye } from "lucide-react";
 import "../styles/Signup.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../services/api.js";
 
-const handleSignup = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      {
-        name: name,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-      }
-    );
-    if (response.status >= 200 && response.status < 300) {
-      navigate("/login");
-    } else {
-      // Handle signup failure
-      console.error("Signup failed:", response.data);
-    }
-  } catch (error) {
-    console.error("Error during signup:", error);
-  }
-};
+// const handleSignup = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const response = await axios.post(
+//       "http://localhost:5000/api/auth/register",
+//       {
+//         name: name,
+//         email: email,
+//         password: password,
+//         confirmPassword: confirmPassword,
+//       }
+//     );
+//     if (response.status >= 200 && response.status < 300) {
+//       navigate("/login");
+//     } else {
+//       // Handle signup failure
+//       console.error("Signup failed:", response.data);
+//     }
+//   } catch (error) {
+//     console.error("Error during signup:", error);
+//   }
+// };
 export default function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

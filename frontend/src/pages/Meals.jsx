@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
-// import { mealService } from "../services/api";
+import { mealService } from "../services/api";
 import {
   Search,
   Plus,
@@ -21,7 +21,7 @@ export default function Meals() {
   const [showAddMealForm, setShowAddMealForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mealPlan, setMealPlan] = useState(null);
-
+  const [filteredMeals] = useState([]);
   // New meal form state
   const [newMeal, setNewMeal] = useState({
     name: "",

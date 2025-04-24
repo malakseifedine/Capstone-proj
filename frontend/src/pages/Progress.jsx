@@ -13,8 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "../styles/Progress.css";
-
-// In Progress.jsx
+import progressService from "../services/api.js";
 
 const Progress = () => {
   const [weightData, setWeightData] = useState([

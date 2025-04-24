@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/Workouts.css";
-
+import workoutService from "../services/api.js";
 // In Workouts.jsx
 
 const Workouts = () => {
