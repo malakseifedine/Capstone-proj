@@ -15,89 +15,6 @@ import {
 import "../styles/Progress.css";
 
 // In Progress.jsx
-useEffect(() => {
-  fetchProgressData();
-}, [timeFrame]);
-
-const fetchProgressData = async () => {
-  try {
-    setIsLoading(true);
-
-    // Fetch weight data
-    const weightResponse = await progressService.getWeightProgress();
-
-    // Format the data for the chart
-    const formattedWeightData = weightResponse.data.map((entry) => ({
-      date: new Date(entry.date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      weight: entry.weight,
-    }));
-
-    setWeightData(formattedWeightData);
-
-    // Fetch complete progress data to calculate measurements
-    const progressResponse = await progressService.getProgress();
-    const progressData = progressResponse.data;
-
-    if (progressData.length > 0) {
-      // Calculate initial, current, and goal values for measurements
-      updateMeasurementsFromProgressData(progressData);
-    }
-
-    setError(null);
-  } catch (err) {
-    console.error("Error fetching progress data:", err);
-    setError("Failed to load progress data. Please try again.");
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-const handleAddMeasurement = async (e) => {
-  e.preventDefault();
-
-  try {
-    setIsLoading(true);
-
-    // Prepare data
-    const progressData = {
-      date: newMeasurement.date,
-      weight: newMeasurement.weight ? parseFloat(newMeasurement.weight) : null,
-      chest: newMeasurement.chest ? parseFloat(newMeasurement.chest) : null,
-      waist: newMeasurement.waist ? parseFloat(newMeasurement.waist) : null,
-      hips: newMeasurement.hips ? parseFloat(newMeasurement.hips) : null,
-      arms: newMeasurement.arms ? parseFloat(newMeasurement.arms) : null,
-      thighs: newMeasurement.thighs ? parseFloat(newMeasurement.thighs) : null,
-    };
-
-    // Submit to API
-    await progressService.addProgress(progressData);
-
-    // Reset form
-    setNewMeasurement({
-      date: new Date().toISOString().split("T")[0],
-      weight: "",
-      chest: "",
-      waist: "",
-      hips: "",
-      arms: "",
-      thighs: "",
-    });
-
-    setShowAddForm(false);
-
-    // Refresh data
-    fetchProgressData();
-    setError(null);
-  } catch (err) {
-    console.error("Error adding measurement:", err);
-    setError("Failed to add measurement. Please try again.");
-  } finally {
-    setIsLoading(false);
-  }
-};
 
 const Progress = () => {
   const [weightData, setWeightData] = useState([
@@ -137,6 +54,94 @@ const Progress = () => {
   ]);
 
   const [timeFrame, setTimeFrame] = useState("6m");
+
+  const handleAddMeasurement = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+
+      // Prepare data
+      const progressData = {
+        date: newMeasurement.date,
+        weight: newMeasurement.weight
+          ? parseFloat(newMeasurement.weight)
+          : null,
+        chest: newMeasurement.chest ? parseFloat(newMeasurement.chest) : null,
+        waist: newMeasurement.waist ? parseFloat(newMeasurement.waist) : null,
+        hips: newMeasurement.hips ? parseFloat(newMeasurement.hips) : null,
+        arms: newMeasurement.arms ? parseFloat(newMeasurement.arms) : null,
+        thighs: newMeasurement.thighs
+          ? parseFloat(newMeasurement.thighs)
+          : null,
+      };
+
+      // Submit to API
+      await progressService.addProgress(progressData);
+
+      // Reset form
+      setNewMeasurement({
+        date: new Date().toISOString().split("T")[0],
+        weight: "",
+        chest: "",
+        waist: "",
+        hips: "",
+        arms: "",
+        thighs: "",
+      });
+
+      setShowAddForm(false);
+
+      // Refresh data
+      fetchProgressData();
+      setError(null);
+    } catch (err) {
+      console.error("Error adding measurement:", err);
+      setError("Failed to add measurement. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchProgressData = async () => {
+    try {
+      setIsLoading(true);
+
+      // Fetch weight data
+      const weightResponse = await progressService.getWeightProgress();
+
+      // Format the data for the chart
+      const formattedWeightData = weightResponse.data.map((entry) => ({
+        date: new Date(entry.date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
+        weight: entry.weight,
+      }));
+
+      setWeightData(formattedWeightData);
+
+      // Fetch complete progress data to calculate measurements
+      const progressResponse = await progressService.getProgress();
+      const progressData = progressResponse.data;
+
+      if (progressData.length > 0) {
+        // Calculate initial, current, and goal values for measurements
+        updateMeasurementsFromProgressData(progressData);
+      }
+
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching progress data:", err);
+      setError("Failed to load progress data. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProgressData();
+  }, [timeFrame]);
 
   const calculateProgress = (current, goal, isReverse = false) => {
     if (isReverse) {

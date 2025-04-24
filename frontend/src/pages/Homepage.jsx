@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import Layout from "../components/Layout";
 import {
   Calendar,
@@ -11,62 +11,62 @@ import {
 } from "lucide-react";
 import "../styles/Homepage.css";
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      setIsLoading(true);
-
-      // Get user data
-      const userResponse = await authService.getCurrentUser();
-      setUser(userResponse.data);
-
-      // Get recent workouts
-      const workoutsResponse = await workoutService.getWorkouts();
-      const recentWorkouts = workoutsResponse.data.slice(0, 5);
-      setWorkouts(recentWorkouts);
-
-      // Get weight progress
-      const weightResponse = await progressService.getWeightProgress();
-      setWeightProgress(weightResponse.data);
-
-      // Calculate weekly workout stats
-      const now = new Date();
-      const weekStart = new Date(now.setDate(now.getDate() - now.getDay())); // Sunday
-
-      const workoutsThisWeek = workoutsResponse.data.filter((workout) => {
-        const workoutDate = new Date(workout.date);
-        return workoutDate >= weekStart;
-      });
-
-      // Calculate stats
-      setStats({
-        calories: {
-          current: calculateDailyCalories(workoutsThisWeek),
-          target: 2000,
-        },
-        workouts: {
-          current: workoutsThisWeek.length,
-          target: 5,
-        },
-        goalProgress: calculateGoalProgress(
-          weightResponse.data,
-          userResponse.data
-        ),
-      });
-
-      setError(null);
-    } catch (err) {
-      console.error("Error loading dashboard data:", err);
-      setError("Failed to load dashboard data. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  fetchUserData();
-}, []);
-
 export default function Homepage() {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        setIsLoading(true);
+
+        // Get user data
+        const userResponse = await authService.getCurrentUser();
+        setUser(userResponse.data);
+
+        // Get recent workouts
+        const workoutsResponse = await workoutService.getWorkouts();
+        const recentWorkouts = workoutsResponse.data.slice(0, 5);
+        setWorkouts(recentWorkouts);
+
+        // Get weight progress
+        const weightResponse = await progressService.getWeightProgress();
+        setWeightProgress(weightResponse.data);
+
+        // Calculate weekly workout stats
+        const now = new Date();
+        const weekStart = new Date(now.setDate(now.getDate() - now.getDay())); // Sunday
+
+        const workoutsThisWeek = workoutsResponse.data.filter((workout) => {
+          const workoutDate = new Date(workout.date);
+          return workoutDate >= weekStart;
+        });
+
+        // Calculate stats
+        setStats({
+          calories: {
+            current: calculateDailyCalories(workoutsThisWeek),
+            target: 2000,
+          },
+          workouts: {
+            current: workoutsThisWeek.length,
+            target: 5,
+          },
+          goalProgress: calculateGoalProgress(
+            weightResponse.data,
+            userResponse.data
+          ),
+        });
+
+        setError(null);
+      } catch (err) {
+        console.error("Error loading dashboard data:", err);
+        setError("Failed to load dashboard data. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <Layout>
       <div className="homepage-container">
