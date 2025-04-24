@@ -1,6 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
+// API URL - Update this if your backend server is running on a different port/host
 const API_URL = 'http://localhost:5000/api';
 
 // Create axios instance with base URL
@@ -11,7 +12,7 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to add authorization header
+// Add request interceptor to add authorization header to every request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -21,6 +22,20 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// Add response interceptor to handle session expiration
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // If unauthorized error (token expired or invalid), redirect to login
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login'; // Redirect to login page
+    }
+    return Promise.reject(error);
+  }
 );
 
 // Authentication services
