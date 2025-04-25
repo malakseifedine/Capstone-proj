@@ -58,9 +58,16 @@ exports.getMealsByCategory = async (req, res) => {
 
 // Get saved meals
 exports.getSavedMeals = async (req, res) => {
+    console.log("hi");
+    const client = await pool.connect();
   try {
-    const mealsResult = await pool.query(
-      `SELECT * FROM meals WHERE user_id = $1 AND is_saved = true ORDER BY created_at DESC`,
+
+    await client.query('BEGIN');
+      
+    // // Insert meal
+    // const mealResult = await client.query(
+    const mealsResult = await client.query(
+      `SELECT * FROM meals WHERE user_id = $1 ORDER BY created_at DESC`,
       [req.user.id]
     );
     
@@ -68,7 +75,7 @@ exports.getSavedMeals = async (req, res) => {
     
     // Get ingredients for each meal
     for (let meal of meals) {
-      const ingredientsResult = await pool.query(
+      const ingredientsResult = await client.query(
         `SELECT ingredient FROM meal_ingredients WHERE meal_id = $1`,
         [meal.id]
       );

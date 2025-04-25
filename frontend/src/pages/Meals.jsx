@@ -21,7 +21,15 @@ export default function Meals() {
   const [showAddMealForm, setShowAddMealForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mealPlan, setMealPlan] = useState(null);
-  const [filteredMeals] = useState([]);
+  // Add null checks when accessing ingredients
+  const filteredMeals = meals.filter(
+    (meal) =>
+      meal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (meal.ingredients &&
+        meal.ingredients.some((ingredient) =>
+          ingredient.toLowerCase().includes(searchQuery.toLowerCase())
+        ))
+  );
   // New meal form state
   const [newMeal, setNewMeal] = useState({
     name: "",
@@ -40,23 +48,32 @@ export default function Meals() {
     try {
       setIsLoading(true);
       let response;
-
+      console.log("worked");
+      console.log(`Active tab: ${activeTab}`);
       if (activeTab === "saved") {
         response = await mealService.getSavedMeals();
+        console.log("saved");
       } else if (activeTab === "all") {
         response = await mealService.getMeals();
+        console.log(response.data);
       } else {
         response = await mealService.getMealsByCategory(
           activeTab.charAt(0).toUpperCase() + activeTab.slice(1)
         );
+        console.log("else");
       }
 
       setMeals(response.data);
+      // Inside fetchMeals, after getting the response
+      console.log(
+        "Sample meal structure:",
+        response.data.length > 0 ? response.data[0] : "No meals found"
+      );
 
       // Get saved meals for toggle functionality
       const savedResponse = await mealService.getSavedMeals();
       setSavedMeals(savedResponse.data.map((meal) => meal.id));
-
+      console.log("from meals");
       setError(null);
     } catch (err) {
       console.error("Error fetching meals:", err);
@@ -385,7 +402,7 @@ export default function Meals() {
 
         {isLoading ? (
           <p className="loading-message">Loading meals...</p>
-        ) : filteredMeals.length === 0 ? (
+        ) : meals.length === 0 ? (
           <p className="empty-message">
             No meals found.{" "}
             {activeTab === "all"
@@ -394,59 +411,76 @@ export default function Meals() {
           </p>
         ) : (
           <div className="meal-grid">
-            {filteredMeals.map((meal) => (
-              <div key={meal.id} className="meal-card">
-                <div className={`meal-image bg-${meal.category.toLowerCase()}`}>
-                  <p className="meal-img-label">{meal.category}</p>
-                  <button
-                    onClick={() => toggleSave(meal.id)}
-                    className="save-btn"
+            {meals
+              .filter(
+                (meal) =>
+                  meal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  (meal.ingredients &&
+                    meal.ingredients.some((ingredient) =>
+                      ingredient
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
+                    ))
+              )
+              .map((meal) => (
+                <div key={meal.id} className="meal-card">
+                  {/* Rest of the meal card content */}
+                  <div
+                    className={`meal-image bg-${meal.category.toLowerCase()}`}
                   >
-                    {savedMeals.includes(meal.id) ? (
-                      <BookmarkCheck size={20} className="saved-icon" />
-                    ) : (
-                      <Bookmark size={20} className="unsaved-icon" />
-                    )}
-                  </button>
-                  <span className="category-badge">{meal.category}</span>
-                </div>
+                    <p className="meal-img-label">{meal.category}</p>
+                    <button
+                      onClick={() => toggleSave(meal.id)}
+                      className="save-btn"
+                    >
+                      {savedMeals.includes(meal.id) ? (
+                        <BookmarkCheck size={20} className="saved-icon" />
+                      ) : (
+                        <Bookmark size={20} className="unsaved-icon" />
+                      )}
+                    </button>
+                    <span className="category-badge">{meal.category}</span>
+                  </div>
 
-                <div className="meal-content">
-                  <h3 className="meal-title">{meal.name}</h3>
-                  <div className="meal-meta">
-                    <div className="meta-item">
-                      <Clock size={16} />
-                      <span>{meal.prepTime || meal.prep_time || 0} min</span>
+                  <div className="meal-content">
+                    <h3 className="meal-title">{meal.name}</h3>
+                    <div className="meal-meta">
+                      <div className="meta-item">
+                        <Clock size={16} />
+                        <span>{meal.prepTime || meal.prep_time || 0} min</span>
+                      </div>
+                      <span>{meal.calories} kcal</span>
                     </div>
-                    <span>{meal.calories} kcal</span>
+                    <div className="meal-ingredients">
+                      <span className="label">Ingredients:</span>
+                      <p>
+                        {meal.ingredients &&
+                          meal.ingredients.slice(0, 3).join(", ")}
+                        {meal.ingredients &&
+                          meal.ingredients.length > 3 &&
+                          "..."}
+                      </p>
+                    </div>
+                    <div className="meal-nutrients">
+                      <div className="nutrient">
+                        <span className="label">Protein:</span>
+                        <span>{meal.protein || 0}g</span>
+                      </div>
+                      <div className="nutrient">
+                        <span className="label">Carbs:</span>
+                        <span>{meal.carbs || 0}g</span>
+                      </div>
+                      <div className="nutrient">
+                        <span className="label">Fat:</span>
+                        <span>{meal.fat || 0}g</span>
+                      </div>
+                    </div>
+                    <a href="#" className="view-link">
+                      View Recipe <ChevronRight size={16} />
+                    </a>
                   </div>
-                  <div className="meal-ingredients">
-                    <span className="label">Ingredients:</span>
-                    <p>
-                      {meal.ingredients.slice(0, 3).join(", ")}
-                      {meal.ingredients.length > 3 && "..."}
-                    </p>
-                  </div>
-                  <div className="meal-nutrients">
-                    <div className="nutrient">
-                      <span className="label">Protein:</span>
-                      <span>{meal.protein || 0}g</span>
-                    </div>
-                    <div className="nutrient">
-                      <span className="label">Carbs:</span>
-                      <span>{meal.carbs || 0}g</span>
-                    </div>
-                    <div className="nutrient">
-                      <span className="label">Fat:</span>
-                      <span>{meal.fat || 0}g</span>
-                    </div>
-                  </div>
-                  <a href="#" className="view-link">
-                    View Recipe <ChevronRight size={16} />
-                  </a>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         )}
 
