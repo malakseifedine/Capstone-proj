@@ -328,12 +328,12 @@ export default function Meals() {
                         currentIngredient: e.target.value,
                       })
                     }
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleAddIngredient();
-                      }
-                    }}
+                    // onKeyPress={(e) => {
+                    //   if (e.key === "Enter") {
+                    //     e.preventDefault();
+                    //     handleAddIngredient();
+                    //   }
+                    // }}
                   />
                   <button
                     type="button"

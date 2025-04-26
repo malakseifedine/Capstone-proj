@@ -13,9 +13,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "../styles/Progress.css";
-import progressService from "../services/api.js";
+import { progressService } from "../services/api";
 
 const Progress = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [weightData, setWeightData] = useState([
     { date: "Jan 1", weight: 76.2 },
     { date: "Jan 8", weight: 75.8 },

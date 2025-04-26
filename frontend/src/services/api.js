@@ -42,7 +42,7 @@ api.interceptors.response.use(
 export const authService = {
   register: (userData) => api.post('/auth/register', userData),
   login: (credentials) => api.post('/auth/login', credentials),
-  getCurrentUser: () => api.get('/auth/me'),
+  getCurrentUser: (id) => api.get('/auth/me'),
   updateProfile: (userData) => api.put('/auth/profile', userData),
 };
 

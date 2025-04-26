@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/Workouts.css";
-import workoutService from "../services/api.js";
-// In Workouts.jsx
+import { workoutService } from "../services/api";
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -18,7 +17,8 @@ const Workouts = () => {
     sets: 3,
     reps: 10,
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   useEffect(() => {
     fetchWorkouts();
   }, []);

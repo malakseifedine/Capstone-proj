@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import {
   Calendar,
@@ -10,8 +10,32 @@ import {
   TrendingUp,
 } from "lucide-react";
 import "../styles/Homepage.css";
+import { authService } from "../services/api";
+import { workoutService } from "../services/api";
+import { progressService } from "../services/api";
 
 export default function Homepage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
+  const [weightProgress, setWeightProgress] = useState([]);
+  const [stats, setStats] = useState({});
+
+  const calculateDailyCalories = (workouts) => {
+    return workouts.reduce(
+      (total, workout) => total + workout.caloriesBurned,
+      0
+    );
+  };
+  const calculateGoalProgress = (weightProgress, user) => {
+    const startWeight = weightProgress[0]?.weight || 0;
+    const currentWeight =
+      weightProgress[weightProgress.length - 1]?.weight || 0;
+    const goal = user.goalWeight || 0;
+
+    return ((startWeight - currentWeight) / (startWeight - goal)) * 100;
+  };
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -32,7 +56,7 @@ export default function Homepage() {
 
         // Calculate weekly workout stats
         const now = new Date();
-        const weekStart = new Date(now.setDate(now.getDate() - now.getDay())); // Sunday
+        const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
 
         const workoutsThisWeek = workoutsResponse.data.filter((workout) => {
           const workoutDate = new Date(workout.date);
