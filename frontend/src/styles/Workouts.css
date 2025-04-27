@@ -34,7 +34,8 @@
     transition: all 0.2s ease-in-out;
   }
   
-  .add-btn {
+  .add-btn,
+  .add-exercise-btn {
     background-color: #7c3aed;
     color: white;
   }

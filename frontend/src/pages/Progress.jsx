@@ -1,99 +1,45 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
+import Sidebar from "../components/Sidebar"; // Import Sidebar
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import "../styles/Progress.css";
 import { progressService } from "../services/api";
+import { Plus } from "lucide-react";
 
 const Progress = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [weightData, setWeightData] = useState([
-    { date: "Jan 1", weight: 76.2 },
-    { date: "Jan 8", weight: 75.8 },
-    { date: "Jan 15", weight: 75.1 },
-    { date: "Jan 22", weight: 74.5 },
-    { date: "Jan 29", weight: 74.0 },
-    { date: "Feb 5", weight: 73.6 },
-    { date: "Feb 12", weight: 72.8 },
-  ]);
-
-  const [workoutData, setWorkoutData] = useState([
-    { week: "Week 1", sessions: 3, duration: 90, intensity: 65 },
-    { week: "Week 2", sessions: 4, duration: 120, intensity: 70 },
-    { week: "Week 3", sessions: 3, duration: 135, intensity: 75 },
-    { week: "Week 4", sessions: 5, duration: 180, intensity: 80 },
-    { week: "Week 5", sessions: 4, duration: 160, intensity: 85 },
-    { week: "Week 6", sessions: 5, duration: 200, intensity: 85 },
-  ]);
-
-  const [nutritionData, setNutritionData] = useState([
-    { week: "Week 1", calories: 2200, protein: 110, carbs: 220, fat: 70 },
-    { week: "Week 2", calories: 2150, protein: 120, carbs: 210, fat: 65 },
-    { week: "Week 3", calories: 2100, protein: 125, carbs: 200, fat: 65 },
-    { week: "Week 4", calories: 2050, protein: 130, carbs: 190, fat: 60 },
-    { week: "Week 5", calories: 2000, protein: 135, carbs: 180, fat: 60 },
-    { week: "Week 6", calories: 2000, protein: 140, carbs: 170, fat: 55 },
-  ]);
-
-  const [measurements, setMeasurements] = useState([
-    { name: "Chest", initial: 96, current: 98, goal: 100 },
-    { name: "Waist", initial: 88, current: 84, goal: 80 },
-    { name: "Hips", initial: 102, current: 99, goal: 97 },
-    { name: "Arms", initial: 33, current: 35, goal: 38 },
-    { name: "Thighs", initial: 58, current: 56, goal: 54 },
-  ]);
-
+  const [weightData, setWeightData] = useState([]);
   const [timeFrame, setTimeFrame] = useState("6m");
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newMeasurement, setNewMeasurement] = useState({
+    date: new Date().toISOString().split("T")[0],
+    weight: "",
+  });
 
   const handleAddMeasurement = async (e) => {
     e.preventDefault();
-
     try {
       setIsLoading(true);
-
-      // Prepare data
       const progressData = {
         date: newMeasurement.date,
         weight: newMeasurement.weight
           ? parseFloat(newMeasurement.weight)
           : null,
-        chest: newMeasurement.chest ? parseFloat(newMeasurement.chest) : null,
-        waist: newMeasurement.waist ? parseFloat(newMeasurement.waist) : null,
-        hips: newMeasurement.hips ? parseFloat(newMeasurement.hips) : null,
-        arms: newMeasurement.arms ? parseFloat(newMeasurement.arms) : null,
-        thighs: newMeasurement.thighs
-          ? parseFloat(newMeasurement.thighs)
-          : null,
       };
-
-      // Submit to API
       await progressService.addProgress(progressData);
-
-      // Reset form
       setNewMeasurement({
         date: new Date().toISOString().split("T")[0],
         weight: "",
-        chest: "",
-        waist: "",
-        hips: "",
-        arms: "",
-        thighs: "",
       });
-
       setShowAddForm(false);
-
-      // Refresh data
       fetchProgressData();
       setError(null);
     } catch (err) {
@@ -107,11 +53,7 @@ const Progress = () => {
   const fetchProgressData = async () => {
     try {
       setIsLoading(true);
-
-      // Fetch weight data
       const weightResponse = await progressService.getWeightProgress();
-
-      // Format the data for the chart
       const formattedWeightData = weightResponse.data.map((entry) => ({
         date: new Date(entry.date).toLocaleDateString("en-US", {
           month: "short",
@@ -119,18 +61,7 @@ const Progress = () => {
         }),
         weight: entry.weight,
       }));
-
       setWeightData(formattedWeightData);
-
-      // Fetch complete progress data to calculate measurements
-      const progressResponse = await progressService.getProgress();
-      const progressData = progressResponse.data;
-
-      if (progressData.length > 0) {
-        // Calculate initial, current, and goal values for measurements
-        updateMeasurementsFromProgressData(progressData);
-      }
-
       setError(null);
     } catch (err) {
       console.error("Error fetching progress data:", err);
@@ -144,66 +75,150 @@ const Progress = () => {
     fetchProgressData();
   }, [timeFrame]);
 
-  const calculateProgress = (current, goal, isReverse = false) => {
-    if (isReverse) {
-      const initial = measurements.find((m) => m.name === "Waist").initial;
-      return Math.min(
-        100,
-        Math.max(0, ((initial - current) / (initial - goal)) * 100)
-      );
-    } else {
-      const initial = 0;
-      return Math.min(100, Math.max(0, (current / goal) * 100));
-    }
-  };
-
-  const weightProgress = () => {
-    const initial = 76.2;
-    const current = weightData[weightData.length - 1].weight;
-    const goal = 70;
-    return {
-      initial,
-      current,
-      goal,
-      percentage: Math.min(
-        100,
-        Math.max(0, ((initial - current) / (initial - goal)) * 100)
-      ),
-    };
-  };
-
-  useEffect(() => {}, [timeFrame]);
-
   return (
-    <Layout>
-      <div className="progress-container">
-        <h1 className="header-title">Weight Progress</h1>
+    <div className="app-container" style={{ display: "flex" }}>
+      <Sidebar />
+      <div className="progress-container" style={{ flex: 1, padding: "20px" }}>
+        <div className="progress-header">
+          <h1 className="header-title">Weight Progress</h1>
+          <button
+            className="add-measurement-btn"
+            onClick={() => setShowAddForm(!showAddForm)}
+          >
+            <Plus size={18} />
+            {showAddForm ? "Cancel" : "Add Weight"}
+          </button>
+        </div>
+
+        {error && <div className="error-message">{error}</div>}
+
+        {showAddForm && (
+          <div className="measurement-form-card">
+            <h2 className="form-title">Add New Weight Measurement</h2>
+            <form onSubmit={handleAddMeasurement}>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Date</label>
+                  <input
+                    type="date"
+                    className="input-field"
+                    value={newMeasurement.date}
+                    onChange={(e) =>
+                      setNewMeasurement({
+                        ...newMeasurement,
+                        date: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Weight (kg)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    className="input-field"
+                    value={newMeasurement.weight}
+                    onChange={(e) =>
+                      setNewMeasurement({
+                        ...newMeasurement,
+                        weight: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-footer">
+                <button type="submit" className="save-btn" disabled={isLoading}>
+                  {isLoading ? "Saving..." : "Save Weight"}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        <div className="time-filter">
+          {["1m", "3m", "6m", "1y"].map((frame) => (
+            <button
+              key={frame}
+              className={`time-btn ${timeFrame === frame ? "active" : ""}`}
+              onClick={() => setTimeFrame(frame)}
+            >
+              {frame.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
         <div className="chart-card">
           <h2 className="chart-title">Weight Tracking</h2>
           <div className="chart-container">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart
-                data={weightData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="date" />
-                <YAxis domain={["dataMin - 1", "dataMax + 1"]} />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="weight"
-                  stroke="#7e57ff"
-                  strokeWidth={2}
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            {isLoading ? (
+              <p className="loading-message">Loading weight data...</p>
+            ) : weightData.length === 0 ? (
+              <p className="empty-chart-message">
+                No weight data available. Add your first weight measurement!
+              </p>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart
+                  data={weightData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="date" />
+                  <YAxis domain={["auto", "auto"]} />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="weight"
+                    stroke="#7e57ff"
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </div>
+
+        {weightData.length >= 2 && (
+          <div className="progress-summary">
+            <h2 className="section-title">Weight Progress Summary</h2>
+            <div className="summary-grid">
+              <div className="summary-card">
+                <h3>Starting Weight</h3>
+                <p className="summary-value">{weightData[0].weight} kg</p>
+              </div>
+              <div className="summary-card">
+                <h3>Current Weight</h3>
+                <p className="summary-value">
+                  {weightData[weightData.length - 1].weight} kg
+                </p>
+              </div>
+              <div className="summary-card">
+                <h3>Weight Change</h3>
+                <p
+                  className={`summary-value ${
+                    weightData[0].weight >
+                    weightData[weightData.length - 1].weight
+                      ? "positive"
+                      : "negative"
+                  }`}
+                >
+                  {(
+                    weightData[0].weight -
+                    weightData[weightData.length - 1].weight
+                  ).toFixed(1)}{" "}
+                  kg
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </Layout>
+    </div>
   );
 };
 
