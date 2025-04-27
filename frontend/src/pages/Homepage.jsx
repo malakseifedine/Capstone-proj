@@ -1,18 +1,8 @@
 import { React, useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import {
-  Calendar,
-  Dumbbell,
-  Flame,
-  Heart,
-  Target,
-  Utensils,
-  TrendingUp,
-} from "lucide-react";
+import { Dumbbell, Flame, Utensils, TrendingUp } from "lucide-react";
 import "../styles/Homepage.css";
-import { authService } from "../services/api";
-import { workoutService } from "../services/api";
-import { progressService } from "../services/api";
+import { authService, workoutService, progressService } from "../services/api";
 
 export default function Homepage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,22 +10,27 @@ export default function Homepage() {
   const [user, setUser] = useState(null);
   const [workouts, setWorkouts] = useState([]);
   const [weightProgress, setWeightProgress] = useState([]);
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState({
+    calories: { current: 0, target: 2000 },
+    workouts: { current: 0, target: 5 },
+    goalProgress: 0,
+  });
 
   const calculateDailyCalories = (workouts) => {
-    return workouts.reduce(
-      (total, workout) => total + workout.caloriesBurned,
-      0
-    );
+    const today = new Date().toISOString().split("T")[0];
+    return workouts
+      .filter((workout) => workout.date.startsWith(today))
+      .reduce((total, workout) => total + (workout.caloriesBurned || 0), 0);
   };
+
   const calculateGoalProgress = (weightProgress, user) => {
     const startWeight = weightProgress[0]?.weight || 0;
     const currentWeight =
       weightProgress[weightProgress.length - 1]?.weight || 0;
     const goal = user.goalWeight || 0;
-
     return ((startWeight - currentWeight) / (startWeight - goal)) * 100;
   };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -45,10 +40,9 @@ export default function Homepage() {
         const userResponse = await authService.getCurrentUser();
         setUser(userResponse.data);
 
-        // Get recent workouts
+        // Get workouts
         const workoutsResponse = await workoutService.getWorkouts();
-        const recentWorkouts = workoutsResponse.data.slice(0, 5);
-        setWorkouts(recentWorkouts);
+        setWorkouts(workoutsResponse.data);
 
         // Get weight progress
         const weightResponse = await progressService.getWeightProgress();
@@ -56,17 +50,20 @@ export default function Homepage() {
 
         // Calculate weekly workout stats
         const now = new Date();
-        const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay());
 
         const workoutsThisWeek = workoutsResponse.data.filter((workout) => {
           const workoutDate = new Date(workout.date);
-          return workoutDate >= weekStart;
+          return workoutDate >= weekStart && workoutDate <= now;
         });
+
+        const dailyCalories = calculateDailyCalories(workoutsResponse.data);
 
         // Calculate stats
         setStats({
           calories: {
-            current: calculateDailyCalories(workoutsThisWeek),
+            current: dailyCalories,
             target: 2000,
           },
           workouts: {
@@ -96,8 +93,9 @@ export default function Homepage() {
       <div className="homepage-container">
         <div className="welcome-section">
           <div>
-            {/* <h1 className="welcome-title">Welcome back, {userName}!</h1> */}
-            <h1 className="welcome-title">Welcome back, user!</h1>
+            <h1 className="welcome-title">
+              Welcome back, {user ? user.name : "user"}!
+            </h1>
             <p className="welcome-subtitle">
               Track your progress and stay motivated.
             </p>
@@ -105,7 +103,7 @@ export default function Homepage() {
         </div>
 
         <div className="stats-grid">
-          {/* Card 1 */}
+          {/* Card 1: Today's Calories */}
           <div className="card">
             <div className="card-header">
               <div className="icon purple">
@@ -113,15 +111,25 @@ export default function Homepage() {
               </div>
               <div>
                 <p className="card-label">Today's Calories</p>
-                <p className="card-value">1,248 / 2,000</p>
+                <p className="card-value">
+                  {stats.calories.current} / {stats.calories.target}
+                </p>
               </div>
             </div>
             <div className="progress-bar">
-              <div className="progress purple" style={{ width: "62%" }}></div>
+              <div
+                className="progress purple"
+                style={{
+                  width: `${Math.min(
+                    (stats.calories.current / stats.calories.target) * 100,
+                    100
+                  )}%`,
+                }}
+              ></div>
             </div>
           </div>
 
-          {/* Card 2 */}
+          {/* Card 2: Workouts This Week */}
           <div className="card">
             <div className="card-header">
               <div className="icon blue">
@@ -129,27 +137,21 @@ export default function Homepage() {
               </div>
               <div>
                 <p className="card-label">Workouts This Week</p>
-                <p className="card-value">4 / 5</p>
+                <p className="card-value">
+                  {stats.workouts.current} / {stats.workouts.target}
+                </p>
               </div>
             </div>
             <div className="progress-bar">
-              <div className="progress blue" style={{ width: "80%" }}></div>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="card">
-            <div className="card-header">
-              <div className="icon green">
-                <Target size={20} />
-              </div>
-              <div>
-                <p className="card-label">Goal Progress</p>
-                <p className="card-value">68%</p>
-              </div>
-            </div>
-            <div className="progress-bar">
-              <div className="progress green" style={{ width: "68%" }}></div>
+              <div
+                className="progress blue"
+                style={{
+                  width: `${Math.min(
+                    (stats.workouts.current / stats.workouts.target) * 100,
+                    100
+                  )}%`,
+                }}
+              ></div>
             </div>
           </div>
         </div>
