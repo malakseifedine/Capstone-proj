@@ -13,7 +13,6 @@ export default function Homepage() {
   const [stats, setStats] = useState({
     calories: { current: 0, target: 2000 },
     workouts: { current: 0, target: 5 },
-    goalProgress: 0,
   });
 
   const calculateDailyCalories = (workouts) => {
