@@ -15,11 +15,20 @@ export default function Homepage() {
     workouts: { current: 0, target: 5 },
   });
 
+  // const calculateDailyCalories = (workouts) => {
+  //   const today = new Date().toISOString().split("T")[0];
+  //   return workouts
+  //     .filter((workout) => workout.date.startsWith(today))
+  //     .reduce((total, workout) => total + (workout.caloriesBurned || 0), 0);
+  // };
   const calculateDailyCalories = (workouts) => {
-    const today = new Date().toISOString().split("T")[0];
+    const todayStr = new Date().toDateString();
     return workouts
-      .filter((workout) => workout.date.startsWith(today))
-      .reduce((total, workout) => total + (workout.caloriesBurned || 0), 0);
+      .filter((workout) => new Date(workout.date).toDateString() === todayStr)
+      .reduce(
+        (total, workout) => total + Number(workout.calories_burned || 0),
+        0
+      );
   };
 
   const calculateGoalProgress = (weightProgress, user) => {
