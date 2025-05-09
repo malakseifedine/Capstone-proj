@@ -17,11 +17,9 @@ const handleLogin = async (e) => {
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/homepage");
     } else {
-      // Handle login failure
       console.error("Login failed:", response.data);
     }
   } catch (error) {
-    // Handle error (e.g., show error message)
     console.error("Error during login:", error);
   }
 };
@@ -53,11 +51,9 @@ export default function Login() {
         localStorage.setItem("token", token);
         navigate("/homepage");
       } else {
-        // Handle login failure
         console.error("Login failed:", response.data);
       }
     } catch (error) {
-      // Handle error (e.g., show error message)
       console.error("Error during login:", error);
     }
   };

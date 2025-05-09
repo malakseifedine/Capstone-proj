@@ -66,7 +66,7 @@ const Workouts = () => {
     try {
       setIsLoading(true);
 
-      // Format data to match API expectations
+      // Format data to match API
       const workoutData = {
         date: newWorkout.date,
         exercises: newWorkout.exercises.map((ex) => ({

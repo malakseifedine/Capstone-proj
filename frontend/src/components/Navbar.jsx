@@ -14,7 +14,6 @@ export default function Navbar() {
         const userResponse = await authService.getCurrentUser();
         setUser(userResponse.data);
 
-        // You can continue here with other data fetching like:
         // const workoutsResponse = await workoutService.getWorkouts();
         // setWorkouts(workoutsResponse.data);
       } catch (err) {

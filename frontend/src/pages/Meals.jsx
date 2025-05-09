@@ -21,7 +21,7 @@ export default function Meals() {
   const [showAddMealForm, setShowAddMealForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mealPlan, setMealPlan] = useState(null);
-  // Add null checks when accessing ingredients
+
   const filteredMeals = meals.filter(
     (meal) =>
       meal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -30,7 +30,7 @@ export default function Meals() {
           ingredient.toLowerCase().includes(searchQuery.toLowerCase())
         ))
   );
-  // New meal form state
+
   const [newMeal, setNewMeal] = useState({
     name: "",
     category: "Breakfast",
@@ -43,7 +43,6 @@ export default function Meals() {
     currentIngredient: "",
   });
 
-  // Fetch meals based on active tab
   const fetchMeals = async () => {
     try {
       setIsLoading(true);
@@ -64,7 +63,6 @@ export default function Meals() {
       }
 
       setMeals(response.data);
-      // Inside fetchMeals, after getting the response
       console.log(
         "Sample meal structure:",
         response.data.length > 0 ? response.data[0] : "No meals found"
@@ -102,7 +100,7 @@ export default function Meals() {
     try {
       await mealService.toggleSaveMeal(mealId);
 
-      // Update local state
+      // Update state
       if (savedMeals.includes(mealId)) {
         setSavedMeals(savedMeals.filter((id) => id !== mealId));
       } else {

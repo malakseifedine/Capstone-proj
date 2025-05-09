@@ -1,10 +1,10 @@
 // src/services/api.js
 import axios from 'axios';
 
-// API URL - Update this if your backend server is running on a different port/host
+
 const API_URL = 'http://localhost:5000/api';
 
-// Create axios instance with base URL
+
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -42,7 +42,7 @@ api.interceptors.response.use(
 export const authService = {
   register: (userData) => api.post('/auth/register', userData),
   login: (credentials) => api.post('/auth/login', credentials),
-  getCurrentUser: (id) => api.get('/auth/me'),
+  getCurrentUser: () => api.get('/auth/me'),
   updateProfile: (userData) => api.put('/auth/profile', userData),
 };
 

@@ -102,7 +102,7 @@
 
 .search-icon {
   position: absolute;
-  left: 16px; /* Adjusted spacing */
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
   color: #6b7280;
@@ -110,10 +110,10 @@
 
 .search-input {
   width: 100%;
-  padding: 14px 16px 14px 44px; /* Adjusted padding */
+  padding: 14px 16px 14px 44px; 
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  font-size: 16px; /* Slightly larger font */
+  font-size: 16px; 
   background-color: white;
 }
 
@@ -123,22 +123,22 @@
   box-shadow: 0 0 0 2px rgba(126, 87, 255, 0.2);
 }
 
-/* Tabs */
+
 .tabs {
   display: flex;
-  justify-content: center; /* Center the tabs */
-  gap: 16px; /* Increased gap */
+  justify-content: center; 
+  gap: 16px; 
   margin-bottom: 32px;
   overflow-x: auto;
 }
 
 .tab-btn {
-  padding: 8px 20px; /* Adjusted padding */
+  padding: 8px 20px; 
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
   font-weight: 500;
-  font-size: 16px; /* Slightly larger font */
+  font-size: 16px; 
   color: #6b7280;
   cursor: pointer;
   white-space: nowrap;
@@ -149,15 +149,15 @@
   border-bottom-color: #7e57ff;
 }
 
-/* Empty state */
+
 .empty-message {
   text-align: center;
-  padding: 60px 20px; /* More padding for empty state */
+  padding: 60px 20px; 
   color: #6b7280;
   font-size: 16px;
 }
 
-/* Meal grid */
+
 .meal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -291,7 +291,7 @@
   font-weight: 500;
 }
 
-/* Meal plan section */
+
 .meal-plan {
   background: white;
   border-radius: 12px;
@@ -378,7 +378,7 @@
   cursor: pointer;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .meals-container {
     margin-left: 0;
@@ -394,6 +394,7 @@
   .create-btn {
     width: 100%;
     justify-content: center;
+    
   }
   
   .tabs {

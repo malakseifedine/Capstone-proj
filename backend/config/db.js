@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 console.log()
-// Create a connection pool
+// Creating a connection pool
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'postgres',

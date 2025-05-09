@@ -10,7 +10,6 @@ const {
 } = require('../controllers/workoutControllers');
 const { protect } = require('../middleware/auth');
 
-// Apply auth middleware to all routes
 router.use(protect);
 
 router.route('/')

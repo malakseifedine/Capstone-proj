@@ -111,7 +111,6 @@ export default function Homepage() {
         </div>
 
         <div className="stats-grid">
-          {/* Card 1: Today's Calories */}
           <div className="card">
             <div className="card-header">
               <div className="icon purple">
@@ -137,7 +136,6 @@ export default function Homepage() {
             </div>
           </div>
 
-          {/* Card 2: Workouts This Week */}
           <div className="card">
             <div className="card-header">
               <div className="icon blue">
@@ -164,7 +162,6 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Today's Plan */}
         <div className="section">
           <h2 className="section-title">Today's Plan</h2>
           <div className="plan-list">
@@ -212,9 +209,7 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Progress Preview */}
         <div className="progress-preview">
-          {/* Weight Progress */}
           <div className="section">
             <div className="section-header">
               <h2 className="section-title">Weight Progress</h2>
@@ -239,7 +234,6 @@ export default function Homepage() {
             </div>
           </div>
 
-          {/* Upcoming Workouts */}
           <div className="section">
             <div className="section-header">
               <h2 className="section-title">Upcoming Workouts</h2>
